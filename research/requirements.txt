@@ -1,6 +1,6 @@
 torch==2.4.0
 vllm==0.6.1.post1
-transformers==4.46.2
+transformers==4.53.0
 accelerate==1.0.1
 auto_gptq==0.7.1
 bitsandbytes==0.44.1

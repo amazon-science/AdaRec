@@ -4,7 +4,7 @@ AdaRec is a counterfactual inference framework for customer outcomes using few-s
 
 For more information, refer to our FMSD @ ICML 2025 paper: [AdaRec: Adaptive Generative Recommendations with Large Language Models](https://openreview.net/forum?id=OCGldvUR9C).
 
-## 🎯 What AdaRec Does
+## What AdaRec Does
 
 AdaRec transforms tabular customer data into rich narrative profiles and uses them to predict counterfactual outcomes:
 
@@ -13,15 +13,7 @@ AdaRec transforms tabular customer data into rich narrative profiles and uses th
 3. **Few-Shot Learning**: Uses similar customers as examples for better predictions
 4. **Product Recommendations**: Generates ideal product descriptions and matches them to catalog items
 
-## 🏗️ Architecture
-
-```
-Tabular Data → Template Profiles → Narrative Profiles → Counterfactual Predictions
-     ↓              ↓                    ↓                      ↓
-Feature Eng.   LLM Generation      Similarity Search      Outcome Prediction
-```
-
-## 📦 Installation
+## Installation
 
 ### Requirements
 - Python 3.12
@@ -57,7 +49,7 @@ aws configure
 python script/prepare_example_dataset.py
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Run the Getting Started Notebook
 
@@ -125,7 +117,7 @@ predictor = BatchPredictor(
 predictions = predictor.generate_predictions()
 ```
 
-## 🔧 Core Components
+## Core Components
 
 ### Profile Generation
 - **BaseProfileGenerator**: Converts tabular features to template text profiles
@@ -141,7 +133,7 @@ predictions = predictor.generate_predictions()
   - Stratified sampling and train/test splits
   - Outcome resampling for imbalanced datasets
 
-## ⚙️ Configuration
+## Configuration
 
 AdaRec uses YAML configuration files for flexibility:
 
@@ -162,7 +154,7 @@ AdaRec uses YAML configuration files for flexibility:
 - Target variables and their descriptions
 - Outcome distributions for context
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 AdaRec/
@@ -179,7 +171,7 @@ AdaRec/
 └── research/                   # Research pipeline for the original paper
 ```
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Predicting Sales
 
@@ -284,15 +276,15 @@ searcher = SimilaritySearcher(product_df, similarity_features=embedding_cols)
 recommendations = searcher.search(customer_embedding)
 ```
 
-## 🤝 Contributing
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
-## 📄 License
+## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## 📚 Citation
+## Citation
 
 If you use AdaRec in your research, please cite our paper:
 

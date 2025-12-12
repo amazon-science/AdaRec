@@ -1,0 +1,55 @@
+# Counterfactual generation configuration for batch processing
+version: '1.0'
+last_updated: '2025-01-09'
+description: 'Configuration for batch counterfactual generation using DSPy and AWS Bedrock'
+
+# Batch processing settings
+batch_processing:
+  # Profile generation batch settings
+  profile_batch_size: 20  # Total customers per batch window
+  profile_max_workers: 2  # Concurrent workers for profile generation
+  profile_seconds_per_batch: 5  # Minimum seconds between batch windows
+  
+  # Counterfactual prediction batch settings
+  prediction_batch_size: 20  # Total customers per batch window
+  prediction_max_workers: 2   # Concurrent workers for predictions
+  prediction_seconds_per_batch: 5  # Minimum seconds between prediction batches
+
+# AWS Bedrock model configurations
+bedrock:
+  region: "us-west-2"
+  
+  # Model for narrative profile generation 
+  profile_model:
+    model_id: "bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+    temperature: 0.0
+    max_tokens: 10000
+    num_retries: 8
+  
+  # Model for counterfactual predictions
+  prediction_model:
+    model_id: "bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+    temperature: 0.0
+    max_tokens: 10000
+    num_retries: 8
+
+# System prompts for different stages
+prompts:
+  profile_generation:
+    system_prompt: |
+      You are a professional customer profile analyst at Big Retail. Your task is to create 
+      clear, concise narratives describing customer profiles based on their behavioral data and 
+      feature distributions. The profiles should be informative and suitable for predicting 
+      customer responses to promotional campaigns. Referring to feature distribution of all customers,
+      Generate natural, flowing narratives that incorporate key behavioral insights while maintaining 
+      readability and coherence. We are going to use this profile to determine how each customer 
+      behaves organically or in response to a promotion.
+  
+  counterfactual_prediction:
+    system_prompt: |
+      You are a Senior Marketing Analyst at Big Retail specializing in customer behavior prediction.
+      Your task is to predict if and how much a customer would purchase based on their profiles. 
+      Consider factors like shopping patterns, basket size, engagement levels, loyalty indicators, 
+      and promotional responsiveness. Provide structured predictions including outcome predictions,
+      confidence level and reasoning. Consider outcome distribution for organic behaviors of the customers 
+      and deduce how would they behave given the treatments.

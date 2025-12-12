@@ -1,0 +1,7 @@
+# Treatment configuration for consolidation analysis
+# Maps to actual DataFrame columns containing treatment information
+
+treatment_features:
+  - feature_name: 'promotion'
+    feature_description: 'Buy X units to get Y% discount (BxGy) promotion'
+    data_type: 'string'

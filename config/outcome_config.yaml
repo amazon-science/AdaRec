@@ -1,0 +1,10 @@
+# Outcome configuration
+# Maps to actual DataFrame columns containing observed outcomes for evaluation
+
+outcome_features:
+  - feature_name: 'TargetSales'
+    feature_description: 'Sales during period of interest'
+    data_type: 'float'
+  - feature_name: 'TargetDescription'
+    feature_description: 'Product description of the ideal product for this customer'
+    data_type: 'string'

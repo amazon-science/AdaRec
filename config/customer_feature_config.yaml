@@ -1,0 +1,76 @@
+version: '1.0'
+last_updated: '2025-01-09'
+description: 'Maps tabular features to feature descriptions for customer profile generation'
+customer_features:
+  customer_lifetime:
+    description: "Number of days since first purchase"
+    domain: "Membership"
+    data_type: "integer"
+  bought_descriptions:
+    description: "Product descriptions of previously purchased items"
+    domain: "Purchase History"
+    data_type: "string"
+  recency:
+    description: "Number of days since customer's last purchase"
+    domain: "Recency"
+    data_type: "integer"
+  purchase_day:
+    description: "Number of purchase days"
+    domain: "Frequency"
+    data_type: "integer"
+  avg_purchase_frequency:
+    description: "Average days between purchases"
+    domain: "Frequency"
+    data_type: "float"
+  total_sales:
+    description: "Total sales"
+    domain: "Monetary"
+    data_type: "float"
+  avg_purchase_value:
+    description: "Average basket size"
+    domain: "Monetary"
+    data_type: "float"
+  nb_product:
+    description: "Number of distinct products purchased"
+    domain: "Diversity"
+    data_type: "integer"
+  nb_category:
+    description: "Number of distinct product categories purchased"
+    domain: "Diversity"
+    data_type: "integer"
+  per_fashion_accessories:
+    description: "Percentage of purchases in Fashion Accessories category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_home_decor:
+    description: "Percentage of purchases in Home Decor category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_kitchen_and_dining:
+    description: "Percentage of purchases in Kitchen and Dining category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_others:
+    description: "Percentage of purchases in Other categories"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_outdoor_and_garden:
+    description: "Percentage of purchases in Outdoor and Garden category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_personal_care_and_wellness:
+    description: "Percentage of purchases in Personal Care and Wellness category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_seasonal_and_holiday:
+    description: "Percentage of purchases in Seasonal and Holiday category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_stationary_and_gifts:
+    description: "Percentage of purchases in Stationary and Gifts category"
+    domain: "Category Preference"
+    data_type: "percent"
+  per_toys_and_games:
+    description: "Percentage of purchases in Toys and Games category"
+    domain: "Category Preference"
+    data_type: "percent"

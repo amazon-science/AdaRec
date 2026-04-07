@@ -172,7 +172,7 @@ class BaseProfileGenerator:
             
             for feature in features:
                 #skip if excluded
-                if feature['feature_name'] in feature_distribution_exclude_cols:
+                if feature_distribution_exclude_cols and feature['feature_name'] in feature_distribution_exclude_cols:
                     continue
 
                 feature_name = feature['feature_name']

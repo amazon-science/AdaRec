@@ -87,8 +87,15 @@ class BatchPredictor:
             )
         
         # Generate outcome distribution only if outcome_context is provided
+        # Prefer reference dataset for outcome distribution when available (more representative)
         if self.outcome_context is not None:
-            self.outcome_distribution = self.describe_outcome_distribution(outcome_distribution_exclude_cols)
+            if reference_generator is not None:
+                outcome_df = self.df
+                self.df = reference_generator.df
+                self.outcome_distribution = self.describe_outcome_distribution(outcome_distribution_exclude_cols)
+                self.df = outcome_df
+            else:
+                self.outcome_distribution = self.describe_outcome_distribution(outcome_distribution_exclude_cols)
         else:
             self.outcome_distribution = None
         
@@ -423,7 +430,7 @@ class BatchPredictor:
                 print(f"\n{'='*80}")
                 print(f"COUNTERFACTUAL PREDICTION PROMPT DEBUG")
                 print(f"{'='*80}")
-                print(f"Customer IDs: {', '.join(customer_ids)}")
+                print(f"Customer IDs: {', '.join(str(cid) for cid in customer_ids)}")
                 print(f"Estimated tokens: ~{estimated_tokens:,}")
                 print(f"Has outcome distribution: {self.outcome_distribution is not None}")
                 print(f"Has similar examples: {similar_examples_text is not None}")
@@ -475,9 +482,14 @@ class BatchPredictor:
                 # Try to extract JSON array from response (in case there's extra text)
                 json_match = re.search(r'\[.*\]', raw_response, re.DOTALL)
                 if json_match:
-                    predictions_array = json.loads(json_match.group())
+                    json_str = json_match.group()
                 else:
-                    predictions_array = json.loads(raw_response)
+                    json_str = raw_response
+                
+                # Fix comma-separated numbers (e.g., 12,005 -> 12005) that break JSON parsing
+                json_str = re.sub(r'(?<=\d),(?=\d{3})', '', json_str)
+                
+                predictions_array = json.loads(json_str)
                 
                 # DEBUG: Only print if there's a mismatch
                 if len(predictions_array) != len(batch_customers):
@@ -649,14 +661,14 @@ class BatchPredictor:
             
             raw_value = prediction_json.get(pred_field)
             
-            if data_type == 'float':
+            if data_type in ('float', 'percent'):
                 try:
                     validated[pred_field] = float(raw_value) if raw_value is not None else 0.0
                 except (ValueError, TypeError):
                     validated[pred_field] = 0.0
-            elif data_type == 'int':
+            elif data_type in ('int', 'integer', 'binary'):
                 try:
-                    validated[pred_field] = int(raw_value) if raw_value is not None else 0
+                    validated[pred_field] = int(float(raw_value)) if raw_value is not None else 0
                 except (ValueError, TypeError):
                     validated[pred_field] = 0
             else:
@@ -683,9 +695,9 @@ class BatchPredictor:
             pred_field = f'pred_{feature_name}'
             data_type = outcome_feature.get('data_type', 'float')
             
-            if data_type == 'float':
+            if data_type in ('float', 'percent'):
                 fallback[pred_field] = 0.0
-            elif data_type == 'int':
+            elif data_type in ('int', 'integer', 'binary'):
                 fallback[pred_field] = 0
             else:
                 fallback[pred_field] = ''
